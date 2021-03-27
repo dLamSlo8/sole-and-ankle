@@ -29,12 +29,31 @@ const ShoeCard = ({
     ? 'on-sale'
     : isNewShoe(releaseDate)
       ? 'new-release'
-      : 'default'
+      : 'default';
+
+  let variantHumanReadable;
+
+  switch (variant) {
+    case 'on-sale':
+      variantHumanReadable = 'Sale';
+      break;
+    case 'new-release':
+      variantHumanReadable = 'Just Released!';
+      break;
+    default: 
+      variantHumanReadable = null;
+      break;
+  }
 
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
+          {
+            variantHumanReadable && (
+              <Variant>{variantHumanReadable}</Variant>
+            )
+          }
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
         <Spacer size={12} />
@@ -51,6 +70,7 @@ const ShoeCard = ({
 };
 
 const Link = styled.a`
+  flex: 1 1 400px;
   text-decoration: none;
   color: inherit;
 `;
@@ -61,7 +81,19 @@ const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Variant = styled.span`
+  position: absolute;
+  top: 1rem;
+  right: -0.5rem;
+  border-radius: 0.2rem;
+  padding: 0.5rem 0.75rem;
+  color: white;
+  background-color: ${COLORS.primary}
+`;
+
+const Image = styled.img`
+  max-width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
